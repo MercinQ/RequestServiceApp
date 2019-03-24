@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace RequestServiceApp.Models
 {
-    class Request
+    public class Request
     {
         [Required()]
         [MaxLength(6), RegularExpression(@"^\S*$")]

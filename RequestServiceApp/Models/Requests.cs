@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace RequestServiceApp.Models
 {
-    class Requests
+    public class Requests
     {
         [XmlElement("request")]
         [JsonProperty("requests")]
