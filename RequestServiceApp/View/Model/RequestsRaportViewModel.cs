@@ -24,7 +24,7 @@ namespace RequestServiceApp.View.Model
         {
             get
             {
-                return $"Łączna kwota zamówień : { Requests.RequestsSum}";
+                return $"Łączna suma zamówień : { Requests.RequestsSum}";
             }
         }
 
@@ -32,8 +32,9 @@ namespace RequestServiceApp.View.Model
         {
             get
             {
-                return $"Łączna kwota zamówień : { Requests.RequestAvg}";
+                return $"Łączna średnia zamówień : { Requests.RequestAvg}";
             }
         }
+
     }
 }

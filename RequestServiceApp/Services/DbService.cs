@@ -9,11 +9,22 @@ namespace RequestServiceApp.Services
 {
     public class DbService
     {
-        public RequestsRaportViewModel GetRequestsRaportViewModel(int ID, double minPrice, double maxPrice)
+        public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName, Requests requests)
         {
-            //linq 
-            // if(ID != null)
-            //write linq here
+
+
+            if (id != null && minPrice == null && maxPrice == null && groupByName == false)
+            {
+                var list = requests.ListOfRequests.FindAll(r => r.ClientId == id).ToList();
+                requests.ListOfRequests = list;
+
+                return new RequestsRaportViewModel()
+                {
+                    Requests = requests
+                };
+            }
+            
+
 
 
             return null;

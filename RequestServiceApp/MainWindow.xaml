@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="545" Width="845">
     <Grid>
-        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" />
+        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" IsReadOnly="True" />
 
         <Menu HorizontalAlignment="Left" Height="24" Margin="0,10,0,0" VerticalAlignment="Top" Width="782">
             <MenuItem x:Name="menuItemOpenFile" Background="Transparent" Header="File">
@@ -21,17 +21,19 @@
                     <ColumnDefinition Width="343*"/>
                     <ColumnDefinition Width="19*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Min:" HorizontalAlignment="Left" Margin="288,4,0,0" VerticalAlignment="Top" Height="26" Width="33" RenderTransformOrigin="0.545,-0.59"/>
-                <CheckBox Content="Price Range" HorizontalAlignment="Left" Margin="201,11,0,0" VerticalAlignment="Top" Height="15" Width="82"/>
-                <Label Content="Max" HorizontalAlignment="Left" Margin="347,4,0,0" VerticalAlignment="Top" Height="26" Width="32"/>
-                <CheckBox x:Name="checkBoxCustomerId" Content="Customer Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="15" Width="85"/>
-                <CheckBox Content="Group By name" HorizontalAlignment="Left" Margin="530,12,0,0" VerticalAlignment="Top" Height="15" Width="110"/>
-                <Button x:Name="buttonApplyFilters" Content="Apply" HorizontalAlignment="Stretch" Height="34" Margin="661,1,63,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,0.588"/>
-                <xctk:IntegerUpDown x:Name="longUpDownCustomerId" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="115,10,0,0"></xctk:IntegerUpDown>
+                <Label Content="Min:" HorizontalAlignment="Left" Margin="297,4,0,0" VerticalAlignment="Top" Height="26" Width="33" RenderTransformOrigin="0.545,-0.59"/>
+                <CheckBox x:Name="checkBoxPriceRange" Content="Price Range" HorizontalAlignment="Left" Margin="193,11,0,0" VerticalAlignment="Top" Height="15" Width="82"/>
+                <Label Content="Max:" HorizontalAlignment="Left" Margin="409,5,0,0" VerticalAlignment="Top" Height="26" Width="32" RenderTransformOrigin="1.042,0.564"/>
+                <CheckBox x:Name="checkBoxCustomerId" Content="Customer Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="15" Width="88"/>
+                <CheckBox x:Name="checkBoxGroupByName" Content="Group By name" HorizontalAlignment="Left" Margin="540,11,0,0" VerticalAlignment="Top" Height="15" Width="110"/>
+                <Button x:Name="buttonApplyFilters" Content="Apply" HorizontalAlignment="Stretch" Height="36" Margin="685,1,18,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,0.588"/>
+                <xctk:DoubleUpDown x:Name="longUpDownMinValue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="340,7,0,0" Width="50" Height="23"/>
+                <xctk:DoubleUpDown x:Name="longUpDownMaxValue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="455,8,0,0" Height="23" Width="50"/>
+                <TextBox x:Name="textBoxCustomerId" HorizontalAlignment="Left" Height="20" Margin="103,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
             </Grid>
         </GroupBox>
-        <Label x:Name="infoLabel" Content="Łączna ilość zamówień:" HorizontalAlignment="Left" Margin="40,393,10,0" VerticalAlignment="Bottom" FontWeight="Bold"/>
-        <Label x:Name="infoLabel_Copy" Content="Łączna kwota zamówień:" HorizontalAlignment="Left" Margin="548,368,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="150"/>
-        <Label x:Name="infoLabel_Copy1" Content="Średnia wartość zamówienia:" HorizontalAlignment="Left" Margin="269,424,0,0" VerticalAlignment="Bottom" FontWeight="Bold"/>
+        <Label x:Name="numberOfRequestsLabel" Content="Łączna ilość zamówień:" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="185"/>
+        <Label x:Name="numberOfSumLabel" Content="Łączna kwota zamówień:" HorizontalAlignment="Left" Margin="564,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="198"/>
+        <Label x:Name="numberOfAvgLabel" Content="Średnia wartość zamówienia:" HorizontalAlignment="Left" Margin="296,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="224"/>
     </Grid>
 </Window>
