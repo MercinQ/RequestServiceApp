@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace RequestServiceApp.Models
 {
+    [XmlRoot("requests")]
     public class Requests
     {
         [XmlElement("request")]

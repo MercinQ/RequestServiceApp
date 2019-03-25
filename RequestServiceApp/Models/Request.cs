@@ -16,6 +16,7 @@ namespace RequestServiceApp.Models
         public string ClientId { get; set; }
 
         [Required()]
+        [XmlElement("requestId")]
         public long RequestId { get; set; }
 
         [Required()]

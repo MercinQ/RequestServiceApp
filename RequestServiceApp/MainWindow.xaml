@@ -1,12 +1,37 @@
-﻿<Window x:Class="RequestServiceApp.MainWindow"
+﻿<Window x:Class="BootcampCoreServicesTaskWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RequestServiceApp"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:BootcampCoreServicesTaskWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="545" Width="845">
     <Grid>
-        
+        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" />
+
+        <Menu HorizontalAlignment="Left" Height="24" Margin="0,10,0,0" VerticalAlignment="Top" Width="782">
+            <MenuItem x:Name="menuItemOpenFile" Background="Transparent" Header="File">
+                <MenuItem Header="Open folder"/>
+            </MenuItem>
+        </Menu>
+        <GroupBox Header="Filters" HorizontalAlignment="Stretch" Height="70" Margin="0,39,0,0" VerticalAlignment="Top" >
+            <Grid HorizontalAlignment="Stretch" Margin="0,10,-2,1" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="343*"/>
+                    <ColumnDefinition Width="19*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Min:" HorizontalAlignment="Left" Margin="288,4,0,0" VerticalAlignment="Top" Height="26" Width="33" RenderTransformOrigin="0.545,-0.59"/>
+                <CheckBox Content="Price Range" HorizontalAlignment="Left" Margin="201,11,0,0" VerticalAlignment="Top" Height="15" Width="82"/>
+                <Label Content="Max" HorizontalAlignment="Left" Margin="347,4,0,0" VerticalAlignment="Top" Height="26" Width="32"/>
+                <CheckBox x:Name="checkBoxCustomerId" Content="Customer Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="15" Width="85"/>
+                <CheckBox Content="Group By name" HorizontalAlignment="Left" Margin="530,12,0,0" VerticalAlignment="Top" Height="15" Width="110"/>
+                <Button x:Name="buttonApplyFilters" Content="Apply" HorizontalAlignment="Stretch" Height="34" Margin="661,1,63,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,0.588"/>
+                <xctk:IntegerUpDown x:Name="longUpDownCustomerId" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="115,10,0,0"></xctk:IntegerUpDown>
+            </Grid>
+        </GroupBox>
+        <Label x:Name="infoLabel" Content="Łączna ilość zamówień:" HorizontalAlignment="Left" Margin="40,393,10,0" VerticalAlignment="Bottom" FontWeight="Bold"/>
+        <Label x:Name="infoLabel_Copy" Content="Łączna kwota zamówień:" HorizontalAlignment="Left" Margin="548,368,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="150"/>
+        <Label x:Name="infoLabel_Copy1" Content="Średnia wartość zamówienia:" HorizontalAlignment="Left" Margin="269,424,0,0" VerticalAlignment="Bottom" FontWeight="Bold"/>
     </Grid>
 </Window>
