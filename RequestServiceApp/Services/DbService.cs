@@ -9,29 +9,53 @@ namespace RequestServiceApp.Services
 {
     public class DbService
     {
-        public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName, Requests requests)
+
+        public Requests Requests = null; //"database"
+
+        public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName)
         {
+            var newList = new List<Request>(Requests.ListOfRequests);
+            var viewModel = new RequestsRaportViewModel();
 
 
-            if (id != null && minPrice == null && maxPrice == null && groupByName == false)
+
+            if (groupByName != false)
             {
-                var list = requests.ListOfRequests.FindAll(r => r.ClientId == id).ToList();
-                requests.ListOfRequests = list;
+                //var temp = newList.
 
-                return new RequestsRaportViewModel()
-                {
-                    Requests = requests
-                };
+                   
+                    
+
             }
-            
 
+            if (id != null)
+            {
+                newList = newList.FindAll(x => x.ClientId == id).ToList();
+            }
 
+            if (minPrice != null && maxPrice != null)
+            {
+                newList = newList.FindAll(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
+            }
 
-            return null;
+            if (minPrice != null)
+            {
+                newList = newList.FindAll(x => x.Price >= minPrice).ToList();
+            }
+
+            if (maxPrice != null)
+            {
+                newList = newList.FindAll(x => x.Price <= maxPrice).ToList();
+            }
+
+           
+            viewModel.RequestList = newList;
+
+            return viewModel;
         }
 
         //save database here
-        public Requests LoadRequests(IEnumerable<string> fileList)
+        public void LoadRequests(IEnumerable<string> fileList)
         {
             var requests = new Requests();
 
@@ -57,7 +81,7 @@ namespace RequestServiceApp.Services
                     requests.ListOfRequests.AddRange(Request.XmlToObjectList(text));
                 }
             }
-            return requests;
+            Requests = requests;
         }
     }
 }

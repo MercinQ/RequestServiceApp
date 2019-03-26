@@ -6,13 +6,11 @@ using RequestServiceApp.Models;
 using RequestServiceApp.Services;
 using RequestServiceApp.View.Model;
 
-namespace BootcampCoreServicesTaskWpf
+namespace RequestServiceApp
 {
 
     public partial class MainWindow : Window
     {
-
-        public Requests Requests = null; //"database"
         public DbService DbService = new DbService();
         public RequestsRaportViewModel RequestsRaportViewModel = new RequestsRaportViewModel();
         public IEnumerable<string> fileList;
@@ -31,7 +29,7 @@ namespace BootcampCoreServicesTaskWpf
             double? minPrice = null;
             double? maxPrice = null;
             bool groupByName = false;
-            
+
 
             if ((bool)checkBoxCustomerId.IsChecked)
             {
@@ -49,26 +47,10 @@ namespace BootcampCoreServicesTaskWpf
                 groupByName = true;
             }
 
-            //when filters are empty
-            if (id == null && minPrice == null && maxPrice == null && groupByName == false)
-            {
-                RequestsRaportViewModel.Requests = DbService.LoadRequests(fileList);
-                dataGridViewRequests.ItemsSource = Requests.ListOfRequests;
-                LoadInfoView();
-            }
-            else
-            {
-                RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName, Requests);
-                dataGridViewRequests.ItemsSource = RequestsRaportViewModel.Requests.ListOfRequests;
-                LoadInfoView();
 
-            }
-
-
-            
-          
-
-
+            RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
+            dataGridViewRequests.ItemsSource = RequestsRaportViewModel.RequestList;
+            LoadInfoView();
         }
 
 
@@ -82,19 +64,16 @@ namespace BootcampCoreServicesTaskWpf
             if (openFileDialog.ShowDialog() == true)
             {
                 fileList = openFileDialog.FileNames;
-                //tu zmień
-                Requests = DbService.LoadRequests(fileList);
-                dataGridViewRequests.ItemsSource = Requests.ListOfRequests;
-                RequestsRaportViewModel.Requests = DbService.LoadRequests(fileList);
-                LoadInfoView();
+                
+                DbService.LoadRequests(fileList);
+                var viewModel = DbService.GetRequestsRaportViewModel(null, null, null, false);
+                dataGridViewRequests.ItemsSource = viewModel.RequestList;
 
-
+                numberOfRequestsLabel.Content = viewModel.RequestsCount;
+                numberOfAvgLabel.Content = viewModel.RequestsAvg;
+                numberOfSumLabel.Content = viewModel.RequestsSum;
+                
             }
-
-        }
-
-        private void btnNumberOfOrders_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 
@@ -118,9 +97,10 @@ namespace BootcampCoreServicesTaskWpf
 
         private void LoadInfoView()
         {
-            numberOfRequestsLabel.Content = RequestsRaportViewModel.RequestsCount;
-            numberOfAvgLabel.Content = RequestsRaportViewModel.RequestsAvg;
-            numberOfSumLabel.Content = RequestsRaportViewModel.RequestsSum;
+                numberOfRequestsLabel.Content = RequestsRaportViewModel.RequestsCount;
+                numberOfAvgLabel.Content = RequestsRaportViewModel.RequestsAvg;
+                numberOfSumLabel.Content = RequestsRaportViewModel.RequestsSum;
         }
     }
 }
+

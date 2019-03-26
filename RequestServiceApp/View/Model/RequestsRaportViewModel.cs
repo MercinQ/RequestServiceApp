@@ -9,14 +9,14 @@ namespace RequestServiceApp.View.Model
 {
     public class RequestsRaportViewModel
     {
-        public Requests Requests { get; set; }
-
+        //public Requests Requests { get; set; }
+        public List<Request> RequestList { get; set; }
 
         public string RequestsCount
         {
             get
             {
-                return $"Łączna liczba zamówień :  { Requests.RequestCount} ";
+                return $"Łączna liczba zamówień :  {RequestList.Count} ";
             }
         }
 
@@ -24,7 +24,9 @@ namespace RequestServiceApp.View.Model
         {
             get
             {
-                return $"Łączna suma zamówień : { Requests.RequestsSum}";
+                double sum = Sum();
+                
+                return $"Łączna suma zamówień : {sum}";
             }
         }
 
@@ -32,9 +34,25 @@ namespace RequestServiceApp.View.Model
         {
             get
             {
-                return $"Łączna średnia zamówień : { Requests.RequestAvg}";
+                double avg = Sum() / RequestList.Count;
+                return $"Łączna średnia zamówień : { avg}";
             }
         }
 
+
+        public double Sum()
+        {
+            double sum = 0.0;
+            foreach (Request request in RequestList)
+            {
+                sum += request.Quantity * request.Price;
+            }
+            return sum;
+        }
+
+        public RequestsRaportViewModel() 
+        {
+            RequestList = new List<Request>();
+        }
     }
 }
