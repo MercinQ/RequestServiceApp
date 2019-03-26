@@ -111,12 +111,12 @@ namespace RequestServiceApp.Services
             {
                 if (Regex.Match(text, @"..csv").Success)
                 {
-                    var rows = File.ReadAllLines(text)
+                    List<Request> list = File.ReadAllLines(text)
                                 .Skip(1)
                                 .Select(p => Request.CsvToObject(p))
                                 .ToList();
 
-                    requests.ListOfRequests.AddRange(rows);
+                    requests.ListOfRequests.AddRange(Request.ListFilter(list));
                 }
 
                 if (Regex.Match(text, @"..json").Success)

@@ -10,12 +10,8 @@ namespace RequestServiceApp.View.Model
 {
     public class RequestViewModel
     {
-        [MaxLength(6)]
         public string Name { get; set; }
-
-        [MaxLength(6)]
         public int Quantity { get; set; }
-
     }
 
     public class GroupByRaportViewModel

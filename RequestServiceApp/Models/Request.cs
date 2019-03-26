@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace RequestServiceApp.Models
@@ -20,17 +21,15 @@ namespace RequestServiceApp.Models
         public long RequestId { get; set; }
 
         [Required()]
-        [MaxLength(6)]
+        [MaxLength(255)]
         [XmlElement("name")]
         public string Name { get; set; }
 
         [Required()]
-        [MaxLength(6)]
         [XmlElement("quantity")]
         public int Quantity { get; set; }
 
         [Required()]
-        [MaxLength(6)]
         [XmlElement("price")]
         public double Price { get; set; }
 
@@ -56,7 +55,7 @@ namespace RequestServiceApp.Models
             List<Request> listToReturn = new List<Request>();
             listToReturn = requests.ListOfRequests;
 
-            return listToReturn;
+            return ListFilter(listToReturn);
         }
         public static List<Request> XmlToObjectList(string file)
         {
@@ -69,7 +68,27 @@ namespace RequestServiceApp.Models
                 Requests result = (Requests)serializer.Deserialize(reader);
                 listToReturn = result.ListOfRequests;
             }
-            return listToReturn;
+            return ListFilter(listToReturn);
         }
+
+        public static List<Request> ListFilter(List<Request> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if(!(list[i].ClientId.Length <= 6 && Regex.Match(list[i].ClientId, @"^\S*$").Success))
+                {
+                    list.RemoveAt(i);
+                }
+
+                if (!(list[i].Name.Length <= 255))
+                {
+                    list.RemoveAt(i);
+                }
+
+            }
+            return list;
+        }
+
+
     }
 }
