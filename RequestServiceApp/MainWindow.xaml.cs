@@ -46,11 +46,23 @@ namespace RequestServiceApp
             {
                 groupByName = true;
             }
-
-
+    
             RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
-            dataGridViewRequests.ItemsSource = RequestsRaportViewModel.RequestList;
-            LoadInfoView();
+
+            if (groupByName != false)
+            {
+                GroupByRaportViewModel groupByRaportViewModel = new GroupByRaportViewModel(RequestsRaportViewModel.RequestList);
+                dataGridViewRequests.ItemsSource = groupByRaportViewModel.RequestViewModels;
+
+                numberOfRequestsLabel.Content = "";
+                numberOfAvgLabel.Content = "";
+                numberOfSumLabel.Content = "";
+            }
+            else
+            {
+                dataGridViewRequests.ItemsSource = RequestsRaportViewModel.RequestList;
+                LoadInfoView();
+            }
         }
 
 

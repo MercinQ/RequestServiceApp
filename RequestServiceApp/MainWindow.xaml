@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="545" Width="845">
     <Grid>
-        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" IsReadOnly="True" />
+        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" IsReadOnly="True" CanUserAddRows="False" />
 
         <Menu HorizontalAlignment="Left" Height="24" Margin="0,10,0,0" VerticalAlignment="Top" Width="782">
             <MenuItem x:Name="menuItemOpenFile" Background="Transparent" Header="File" Height="24" Width="46">
