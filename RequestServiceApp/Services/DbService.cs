@@ -18,7 +18,6 @@ namespace RequestServiceApp.Services
             var viewModel = new RequestsRaportViewModel();
 
 
-
             if (groupByName != false && id != null) //quantity per name and ClientId
             {
                  newList = newList.Where(x => x.ClientId == id).GroupBy(x => x.Name)
@@ -40,7 +39,37 @@ namespace RequestServiceApp.Services
 
             }
 
-            if (id != null)
+            if (id != null && minPrice != null && maxPrice != null) //filtr by Id and price range
+            {
+                newList = newList.FindAll(x => x.Price >= minPrice && x.Price <= maxPrice)
+                    .Where(x => x.ClientId == id)
+                    .ToList();
+
+                viewModel.RequestList = newList;
+                return viewModel;
+            }
+
+            if (id != null && minPrice != null) //filtr by Id and minPrice
+            {
+                newList = newList.FindAll(x => x.Price >= minPrice)
+                    .Where(x => x.ClientId == id)
+                    .ToList();
+
+                viewModel.RequestList = newList;
+                return viewModel;
+            }
+
+            if (id != null && maxPrice != null) //filtr by Id and maxPrice
+            {
+                newList = newList.FindAll(x => x.Price <= maxPrice)
+                    .Where(x => x.ClientId == id)
+                    .ToList();
+
+                viewModel.RequestList = newList;
+                return viewModel;
+            }
+
+            if (id != null) //filtr by Id
             {
                 newList = newList.FindAll(x => x.ClientId == id).ToList();
 
@@ -48,19 +77,19 @@ namespace RequestServiceApp.Services
                 return viewModel;
             }
 
-            if (minPrice != null && maxPrice != null)
+            if (minPrice != null && maxPrice != null) //filtr by Price Range
             {
                 newList = newList.FindAll(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
 
             }
 
-            if (minPrice != null)
+            if (minPrice != null) //filr by minPrice
             {
                 newList = newList.FindAll(x => x.Price >= minPrice).ToList();
 
             }
 
-            if (maxPrice != null)
+            if (maxPrice != null) //filtr by maxPrice
             {
                 newList = newList.FindAll(x => x.Price <= maxPrice).ToList();
 

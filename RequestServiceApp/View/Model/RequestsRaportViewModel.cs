@@ -9,7 +9,6 @@ namespace RequestServiceApp.View.Model
 {
     public class RequestsRaportViewModel
     {
-        //public Requests Requests { get; set; }
         public List<Request> RequestList { get; set; }
 
         public string RequestsCount
