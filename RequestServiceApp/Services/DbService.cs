@@ -12,11 +12,13 @@ namespace RequestServiceApp.Services
 
         public Requests Requests = null; //"database"
 
+  
         public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName)
         {
-            var newList = new List<Request>(Requests.ListOfRequests);
-            var viewModel = new RequestsRaportViewModel();
-
+            
+             var newList = new List<Request>(Requests.ListOfRequests);
+             var viewModel = new RequestsRaportViewModel();
+      
 
             if (groupByName != false && id != null) //quantity per name and ClientId
             {

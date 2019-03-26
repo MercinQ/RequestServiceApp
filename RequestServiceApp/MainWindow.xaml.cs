@@ -53,7 +53,7 @@ namespace RequestServiceApp
             {
                 GroupByRaportViewModel groupByRaportViewModel = new GroupByRaportViewModel(RequestsRaportViewModel.RequestList);
                 dataGridViewRequests.ItemsSource = groupByRaportViewModel.RequestViewModels;
-
+                
                 numberOfRequestsLabel.Content = "";
                 numberOfAvgLabel.Content = "";
                 numberOfSumLabel.Content = "";
