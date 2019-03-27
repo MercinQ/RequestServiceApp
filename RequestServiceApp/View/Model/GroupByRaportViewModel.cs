@@ -1,10 +1,5 @@
 ﻿using RequestServiceApp.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RequestServiceApp.View.Model
 {
@@ -25,8 +20,7 @@ namespace RequestServiceApp.View.Model
             {
                 RequestViewModels.Add(new RequestViewModel {Name="",Quantity = 0 });
             }
-
-           
+  
             for (int i=0; i < list.Count; i++)
             {
                 RequestViewModels[i].Name = list[i].Name;

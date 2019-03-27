@@ -1,9 +1,5 @@
 ﻿using RequestServiceApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RequestServiceApp.View.Model
 {
@@ -37,7 +33,6 @@ namespace RequestServiceApp.View.Model
                 return $"Łączna średnia zamówień : { avg}";
             }
         }
-
 
         public double Sum()
         {

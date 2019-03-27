@@ -1,5 +1,6 @@
 ﻿using RequestServiceApp.Models;
 using RequestServiceApp.View.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,28 +10,26 @@ namespace RequestServiceApp.Services
 {
     public class DbService
     {
-
         public Requests Requests = null; //"database"
+        public Action<string> printOnScreen;
 
-  
         public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName)
         {
-            
-             var newList = new List<Request>(Requests.ListOfRequests);
-             var viewModel = new RequestsRaportViewModel();
-      
+            var newList = new List<Request>(Requests.ListOfRequests);
+            var viewModel = new RequestsRaportViewModel();
 
-            if (groupByName != false && id != null) //quantity per name and ClientId
+
+            if (groupByName != false && id != null) //Group By and clientId fitler
             {
-                 newList = newList.Where(x => x.ClientId == id).GroupBy(x => x.Name)
-                     .Select(x => new Request  { Name = x.Key, Quantity = x.Sum(y => y.Quantity) })
-                     .ToList();
-                
+                newList = newList.Where(x => x.ClientId == id).GroupBy(x => x.Name)
+                    .Select(x => new Request { Name = x.Key, Quantity = x.Sum(y => y.Quantity) })
+                    .ToList();
+
                 viewModel.RequestList = newList;
                 return viewModel;
             }
-            
-            if (groupByName != false) //quantity per name
+
+            if (groupByName != false) //Group By filter
             {
                 newList = newList.GroupBy(x => x.Name)
                     .Select(x => new Request { Name = x.Key, Quantity = x.Sum(y => y.Quantity) })
@@ -102,7 +101,7 @@ namespace RequestServiceApp.Services
 
         }
 
-        //save database here
+        //save "database" here
         public void LoadRequests(IEnumerable<string> fileList)
         {
             var requests = new Requests();
@@ -111,22 +110,44 @@ namespace RequestServiceApp.Services
             {
                 if (Regex.Match(text, @"..csv").Success)
                 {
-                    List<Request> list = File.ReadAllLines(text)
+                    try
+                    {
+                        List<Request> list = File.ReadAllLines(text)
                                 .Skip(1)
                                 .Select(p => Request.CsvToObject(p))
                                 .ToList();
-
-                    requests.ListOfRequests.AddRange(Request.ListFilter(list));
+                    
+                        requests.ListOfRequests.AddRange(Request.ListFilter(list));
+                    }
+                    catch (Exception ex)
+                    {
+                        printOnScreen(ex.Message);
+                    }
                 }
 
                 if (Regex.Match(text, @"..json").Success)
                 {
-                    requests.ListOfRequests.AddRange(Request.JsonToObjectList(text));
+                    try
+                    {
+                        requests.ListOfRequests.AddRange(Request.JsonToObjectList(text));
+                    }
+                    catch (Exception ex)
+                    {
+                        printOnScreen(ex.Message);
+                    }
+
                 }
 
                 if (Regex.Match(text, @".*.xml").Success)
                 {
-                    requests.ListOfRequests.AddRange(Request.XmlToObjectList(text));
+                    try
+                    {
+                        requests.ListOfRequests.AddRange(Request.XmlToObjectList(text));
+                    }
+                    catch (Exception ex)
+                    {
+                        printOnScreen(ex.Message);
+                    }
                 }
             }
             Requests = requests;

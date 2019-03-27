@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -11,25 +10,18 @@ namespace RequestServiceApp.Models
 {
     public class Request
     {
-        [Required()]
-        [MaxLength(6), RegularExpression(@"^\S*$")]
         [XmlElement("clientId")]
         public string ClientId { get; set; }
 
-        [Required()]
         [XmlElement("requestId")]
         public long RequestId { get; set; }
 
-        [Required()]
-        [MaxLength(255)]
         [XmlElement("name")]
         public string Name { get; set; }
 
-        [Required()]
         [XmlElement("quantity")]
         public int Quantity { get; set; }
-
-        [Required()]
+   
         [XmlElement("price")]
         public double Price { get; set; }
 
@@ -84,11 +76,9 @@ namespace RequestServiceApp.Models
                 {
                     list.RemoveAt(i);
                 }
-
             }
             return list;
         }
-
 
     }
 }

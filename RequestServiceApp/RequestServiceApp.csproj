@@ -110,8 +110,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="FilesForTest\order.csv" />
-    <None Include="FilesForTest\order.json" />
+    <None Include="FilesForTest\orders.csv" />
+    <None Include="FilesForTest\orders.json" />
+    <None Include="FilesForTest\orders_witherrorTheSameType.csv" />
+    <None Include="FilesForTest\orders_witherrorTheSameType.json" />
+    <None Include="FilesForTest\orders_witherrorToIgnore.csv" />
+    <None Include="FilesForTest\orders_witherrorToIgnore.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -121,8 +125,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="FilesForTest\order.xml" />
+    <Resource Include="FilesForTest\orders.xml" />
+    <Resource Include="FilesForTest\orders_witherrorTheSameType.xml" />
+    <Resource Include="FilesForTest\orders_witherrorToIgnore.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
-using RequestServiceApp.Models;
 using RequestServiceApp.Services;
 using RequestServiceApp.View.Model;
 
@@ -20,8 +19,8 @@ namespace RequestServiceApp
             InitializeComponent();
             menuItemOpenFile.Click += btnFileDialog_Click;
             buttonApplyFilters.Click += buttonApplyFilters_Click;
+            DbService.printOnScreen = printDialog;
         }
-
 
         private void buttonApplyFilters_Click(object sender, RoutedEventArgs e)
         {
@@ -46,14 +45,20 @@ namespace RequestServiceApp
             {
                 groupByName = true;
             }
-    
-            RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
 
+            try
+            {
+                RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
+            }
+            catch (System.NullReferenceException)
+            {
+                MessageBox.Show("Proszę wczytaj rekordy z zamówieniami");
+            }
             if (groupByName != false)
             {
                 GroupByRaportViewModel groupByRaportViewModel = new GroupByRaportViewModel(RequestsRaportViewModel.RequestList);
                 dataGridViewRequests.ItemsSource = groupByRaportViewModel.RequestViewModels;
-                
+
                 numberOfRequestsLabel.Content = "";
                 numberOfAvgLabel.Content = "";
                 numberOfSumLabel.Content = "";
@@ -65,6 +70,10 @@ namespace RequestServiceApp
             }
         }
 
+        public void printDialog(string text)
+        {
+            MessageBox.Show(text);
+        }
 
         private void btnFileDialog_Click(object sender, RoutedEventArgs e)
         {
@@ -76,7 +85,7 @@ namespace RequestServiceApp
             if (openFileDialog.ShowDialog() == true)
             {
                 fileList = openFileDialog.FileNames;
-                
+
                 DbService.LoadRequests(fileList);
                 var viewModel = DbService.GetRequestsRaportViewModel(null, null, null, false);
                 dataGridViewRequests.ItemsSource = viewModel.RequestList;
@@ -84,34 +93,25 @@ namespace RequestServiceApp
                 numberOfRequestsLabel.Content = viewModel.RequestsCount;
                 numberOfAvgLabel.Content = viewModel.RequestsAvg;
                 numberOfSumLabel.Content = viewModel.RequestsSum;
-                
+
             }
 
         }
-
 
         private void ImagePanel_Drop(object sender, DragEventArgs e)
         {
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                // Note that you can have more than one file.
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
         private void LoadInfoView()
         {
-                numberOfRequestsLabel.Content = RequestsRaportViewModel.RequestsCount;
-                numberOfAvgLabel.Content = RequestsRaportViewModel.RequestsAvg;
-                numberOfSumLabel.Content = RequestsRaportViewModel.RequestsSum;
+            numberOfRequestsLabel.Content = RequestsRaportViewModel.RequestsCount;
+            numberOfAvgLabel.Content = RequestsRaportViewModel.RequestsAvg;
+            numberOfSumLabel.Content = RequestsRaportViewModel.RequestsSum;
         }
     }
 }

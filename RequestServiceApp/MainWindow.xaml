@@ -6,17 +6,21 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:RequestServiceApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="545" Width="845">
+        Title="MainWindow" Height="545" Width="845" Background="#FFE6E6E6">
     <Grid>
-        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" IsReadOnly="True" CanUserAddRows="False" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="22*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dataGridViewRequests" HorizontalAlignment="Stretch"  Margin="10,124,10,31" VerticalAlignment="Stretch" IsReadOnly="True" CanUserAddRows="False" Grid.ColumnSpan="2" />
 
-        <Menu HorizontalAlignment="Left" Height="24" Margin="0,10,0,0" VerticalAlignment="Top" Width="782">
+        <Menu HorizontalAlignment="Stretch" Height="29" Margin="0,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem x:Name="menuItemOpenFile" Background="Transparent" Header="File" Height="24" Width="46">
                 <MenuItem Header="Open folder"/>
             </MenuItem>
         </Menu>
-        <GroupBox Header="Filters" HorizontalAlignment="Stretch" Height="70" Margin="0,39,0,0" VerticalAlignment="Top" >
-            <Grid HorizontalAlignment="Stretch" Margin="0,10,-2,1" VerticalAlignment="Stretch">
+        <GroupBox Header="Filters" HorizontalAlignment="Stretch" Height="70" Margin="0,39,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" >
+            <Grid HorizontalAlignment="Stretch" Margin="0,10,-2,1" VerticalAlignment="Stretch" Background="#FFE4E4E4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="343*"/>
                     <ColumnDefinition Width="19*"/>
@@ -26,14 +30,14 @@
                 <Label Content="Max:" HorizontalAlignment="Left" Margin="409,5,0,0" VerticalAlignment="Top" Height="26" Width="32" RenderTransformOrigin="1.042,0.564"/>
                 <CheckBox x:Name="checkBoxCustomerId" Content="Customer Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="15" Width="88"/>
                 <CheckBox x:Name="checkBoxGroupByName" Content="Group By name" HorizontalAlignment="Left" Margin="540,11,0,0" VerticalAlignment="Top" Height="15" Width="110"/>
-                <Button x:Name="buttonApplyFilters" Content="Apply" HorizontalAlignment="Stretch" Height="29" Margin="688,5,16,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,0.588"/>
+                <Button x:Name="buttonApplyFilters" Content="Apply" HorizontalAlignment="Stretch" Height="29" Margin="688,5,16,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,0.588" MaxWidth="120"/>
                 <xctk:DoubleUpDown x:Name="longUpDownMinValue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="340,7,0,0" Width="50" Height="23"/>
                 <xctk:DoubleUpDown x:Name="longUpDownMaxValue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="455,8,0,0" Height="23" Width="50"/>
                 <TextBox x:Name="textBoxCustomerId" HorizontalAlignment="Left" Height="20" Margin="103,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"/>
             </Grid>
         </GroupBox>
         <Label x:Name="numberOfRequestsLabel" Content="Łączna ilość zamówień:" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="185"/>
-        <Label x:Name="numberOfSumLabel" Content="Łączna kwota zamówień:" HorizontalAlignment="Left" Margin="564,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="198"/>
+        <Label x:Name="numberOfSumLabel" Content="Łączna kwota zamówień:" HorizontalAlignment="Left" Margin="564,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="198" Grid.ColumnSpan="2"/>
         <Label x:Name="numberOfAvgLabel" Content="Średnia wartość zamówienia:" HorizontalAlignment="Left" Margin="296,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Width="224"/>
     </Grid>
 </Window>
