@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -25,18 +26,15 @@ namespace RequestServiceApp.Models
         [XmlElement("price")]
         public double Price { get; set; }
 
-        static public Request CsvToObject(string csvText)
+
+        static public List<Request> CsvToObjectList(string file)
         {
-            string[] values = csvText.Split(',');
-            Request order = new Request
-            {
-                ClientId = values[0],
-                RequestId = (long)Convert.ToDouble(values[1]),
-                Name = values[2],
-                Quantity = Convert.ToInt32(values[3]),
-                Price = double.Parse(values[4], CultureInfo.InvariantCulture)
-            };
-            return order;
+            List<Request> listToReturn = File.ReadAllLines(file)
+                            .Skip(1)
+                            .Select(p => CsvToObject(p))
+                            .ToList();
+
+            return ListFilter(listToReturn);
         }
 
         public static List<Request> JsonToObjectList(string file)
@@ -80,5 +78,18 @@ namespace RequestServiceApp.Models
             return list;
         }
 
+        static private Request CsvToObject(string csvText)
+        {
+            string[] values = csvText.Split(',');
+            Request request = new Request
+            {
+                ClientId = values[0],
+                RequestId = (long)Convert.ToDouble(values[1]),
+                Name = values[2],
+                Quantity = Convert.ToInt32(values[3]),
+                Price = double.Parse(values[4], CultureInfo.InvariantCulture)
+            };
+            return request;
+        }
     }
 }

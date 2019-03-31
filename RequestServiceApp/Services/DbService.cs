@@ -17,6 +17,7 @@ namespace RequestServiceApp.Services
         {
             var newList = new List<Request>(Requests.ListOfRequests);
             var viewModel = new RequestsRaportViewModel();
+            
 
 
             if (groupByName != false && id != null) //Group By and clientId fitler
@@ -37,7 +38,6 @@ namespace RequestServiceApp.Services
 
                 viewModel.RequestList = newList;
                 return viewModel;
-
             }
 
             if (id != null && minPrice != null && maxPrice != null) //filtr by Id and price range
@@ -87,13 +87,11 @@ namespace RequestServiceApp.Services
             if (minPrice != null) //filr by minPrice
             {
                 newList = newList.FindAll(x => x.Price >= minPrice).ToList();
-
             }
 
             if (maxPrice != null) //filtr by maxPrice
             {
                 newList = newList.FindAll(x => x.Price <= maxPrice).ToList();
-
             }
 
             viewModel.RequestList = newList;
@@ -112,12 +110,7 @@ namespace RequestServiceApp.Services
                 {
                     try
                     {
-                        List<Request> list = File.ReadAllLines(text)
-                                .Skip(1)
-                                .Select(p => Request.CsvToObject(p))
-                                .ToList();
-                    
-                        requests.ListOfRequests.AddRange(Request.ListFilter(list));
+                        requests.ListOfRequests.AddRange(Request.CsvToObjectList(text));
                     }
                     catch (Exception ex)
                     {
@@ -135,7 +128,6 @@ namespace RequestServiceApp.Services
                     {
                         printOnScreen(ex.Message);
                     }
-
                 }
 
                 if (Regex.Match(text, @".*.xml").Success)

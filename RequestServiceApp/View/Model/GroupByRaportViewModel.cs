@@ -15,7 +15,6 @@ namespace RequestServiceApp.View.Model
 
         public GroupByRaportViewModel(List<Request> list)
         {
-            //init list
             for (int i = 0; i < list.Count; i++)
             {
                 RequestViewModels.Add(new RequestViewModel {Name="",Quantity = 0 });

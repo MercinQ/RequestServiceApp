@@ -13,7 +13,7 @@ namespace RequestServiceApp
         public DbService DbService = new DbService();
         public RequestsRaportViewModel RequestsRaportViewModel = new RequestsRaportViewModel();
         public IEnumerable<string> fileList;
-
+        
         public MainWindow()
         {
             InitializeComponent();
