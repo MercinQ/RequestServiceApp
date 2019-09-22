@@ -2,7 +2,6 @@
 using RequestServiceApp.View.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -13,20 +12,18 @@ namespace RequestServiceApp.Services
         public Requests Requests = null; //"database"
         public Action<string> printOnScreen;
 
-        public RequestsRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName)
+        public SummaryRaportViewModel GetRequestsRaportViewModel(string id, double? minPrice, double? maxPrice, bool groupByName)
         {
             var newList = new List<Request>(Requests.ListOfRequests);
-            var viewModel = new RequestsRaportViewModel();
+            var viewModel = new SummaryRaportViewModel();
             
-
-
             if (groupByName != false && id != null) //Group By and clientId fitler
             {
                 newList = newList.Where(x => x.ClientId == id).GroupBy(x => x.Name)
                     .Select(x => new Request { Name = x.Key, Quantity = x.Sum(y => y.Quantity) })
                     .ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -36,7 +33,7 @@ namespace RequestServiceApp.Services
                     .Select(x => new Request { Name = x.Key, Quantity = x.Sum(y => y.Quantity) })
                     .ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -46,7 +43,7 @@ namespace RequestServiceApp.Services
                     .Where(x => x.ClientId == id)
                     .ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -56,7 +53,7 @@ namespace RequestServiceApp.Services
                     .Where(x => x.ClientId == id)
                     .ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -66,7 +63,7 @@ namespace RequestServiceApp.Services
                     .Where(x => x.ClientId == id)
                     .ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -74,7 +71,7 @@ namespace RequestServiceApp.Services
             {
                 newList = newList.FindAll(x => x.ClientId == id).ToList();
 
-                viewModel.RequestList = newList;
+                viewModel.ListOfRequests = newList;
                 return viewModel;
             }
 
@@ -94,7 +91,7 @@ namespace RequestServiceApp.Services
                 newList = newList.FindAll(x => x.Price <= maxPrice).ToList();
             }
 
-            viewModel.RequestList = newList;
+            viewModel.ListOfRequests = newList;
             return viewModel;
 
         }
@@ -103,6 +100,7 @@ namespace RequestServiceApp.Services
         public void LoadRequests(IEnumerable<string> fileList)
         {
             var requests = new Requests();
+            var request = new Request();
 
             foreach (string text in fileList)
             {
@@ -110,7 +108,7 @@ namespace RequestServiceApp.Services
                 {
                     try
                     {
-                        requests.ListOfRequests.AddRange(Request.CsvToObjectList(text));
+                        requests.ListOfRequests.AddRange(request.CsvToObjectList(text));
                     }
                     catch (Exception ex)
                     {
@@ -122,7 +120,7 @@ namespace RequestServiceApp.Services
                 {
                     try
                     {
-                        requests.ListOfRequests.AddRange(Request.JsonToObjectList(text));
+                        requests.ListOfRequests.AddRange(request.JsonToObjectList(text));
                     }
                     catch (Exception ex)
                     {
@@ -134,7 +132,7 @@ namespace RequestServiceApp.Services
                 {
                     try
                     {
-                        requests.ListOfRequests.AddRange(Request.XmlToObjectList(text));
+                        requests.ListOfRequests.AddRange(request.XmlToObjectList(text));
                     }
                     catch (Exception ex)
                     {

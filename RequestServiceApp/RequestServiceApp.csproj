@@ -75,8 +75,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\DbService.cs" />
-    <Compile Include="View\Model\GroupByRaportViewModel.cs" />
-    <Compile Include="View\Model\RequestsRaportViewModel.cs" />
+    <Compile Include="Services\GroupByService.cs" />
+    <Compile Include="View\Model\GroupByRequestViewModel.cs" />
+    <Compile Include="View\Model\SummaryRaportViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

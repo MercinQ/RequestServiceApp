@@ -15,5 +15,25 @@ namespace RequestServiceApp.Models
         {
             ListOfRequests = new List<Request>();
         }
+
+        public double GetSum()
+        {
+            var sum = 0.0;
+            foreach (var request in ListOfRequests)
+            {
+                sum += request.Quantity * request.Price;
+            }
+            return sum;
+        }
+
+        public double GetAvg()
+        {
+            return GetSum() / GetCount();
+        }
+
+        public double GetCount()
+        {
+            return ListOfRequests.Count;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace RequestServiceApp
     public partial class MainWindow : Window
     {
         public DbService DbService = new DbService();
-        public RequestsRaportViewModel RequestsRaportViewModel = new RequestsRaportViewModel();
+        public SummaryRaportViewModel SummaryRaportViewModel = new SummaryRaportViewModel();
         public IEnumerable<string> fileList;
         
         public MainWindow()
@@ -27,7 +27,7 @@ namespace RequestServiceApp
             string id = null;
             double? minPrice = null;
             double? maxPrice = null;
-            bool groupByName = false;
+            var groupByName = false;
 
 
             if ((bool)checkBoxCustomerId.IsChecked)
@@ -48,7 +48,7 @@ namespace RequestServiceApp
 
             try
             {
-                RequestsRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
+                SummaryRaportViewModel = DbService.GetRequestsRaportViewModel(id, minPrice, maxPrice, groupByName);
             }
             catch (System.NullReferenceException)
             {
@@ -56,8 +56,10 @@ namespace RequestServiceApp
             }
             if (groupByName != false)
             {
-                GroupByRaportViewModel groupByRaportViewModel = new GroupByRaportViewModel(RequestsRaportViewModel.RequestList);
-                dataGridViewRequests.ItemsSource = groupByRaportViewModel.RequestViewModels;
+                var groupByService = new GroupByService();
+                var itemsGroupBy = groupByService.GroupBy(SummaryRaportViewModel.ListOfRequests);
+                
+                dataGridViewRequests.ItemsSource = itemsGroupBy;
 
                 numberOfRequestsLabel.Content = "";
                 numberOfAvgLabel.Content = "";
@@ -65,7 +67,7 @@ namespace RequestServiceApp
             }
             else
             {
-                dataGridViewRequests.ItemsSource = RequestsRaportViewModel.RequestList;
+                dataGridViewRequests.ItemsSource = SummaryRaportViewModel.ListOfRequests;
                 LoadInfoView();
             }
         }
@@ -85,33 +87,30 @@ namespace RequestServiceApp
             if (openFileDialog.ShowDialog() == true)
             {
                 fileList = openFileDialog.FileNames;
-
                 DbService.LoadRequests(fileList);
-                var viewModel = DbService.GetRequestsRaportViewModel(null, null, null, false);
-                dataGridViewRequests.ItemsSource = viewModel.RequestList;
 
+                var viewModel = DbService.GetRequestsRaportViewModel(null, null, null, false);
+
+                dataGridViewRequests.ItemsSource = viewModel.ListOfRequests;
                 numberOfRequestsLabel.Content = viewModel.RequestsCount;
                 numberOfAvgLabel.Content = viewModel.RequestsAvg;
                 numberOfSumLabel.Content = viewModel.RequestsSum;
-
             }
-
         }
 
         private void ImagePanel_Drop(object sender, DragEventArgs e)
         {
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             }
         }
 
         private void LoadInfoView()
         {
-            numberOfRequestsLabel.Content = RequestsRaportViewModel.RequestsCount;
-            numberOfAvgLabel.Content = RequestsRaportViewModel.RequestsAvg;
-            numberOfSumLabel.Content = RequestsRaportViewModel.RequestsSum;
+            numberOfRequestsLabel.Content = SummaryRaportViewModel.RequestsCount;
+            numberOfAvgLabel.Content = SummaryRaportViewModel.RequestsAvg;
+            numberOfSumLabel.Content = SummaryRaportViewModel.RequestsSum;
         }
     }
 }
